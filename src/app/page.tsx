@@ -25,7 +25,7 @@ export default function Home() {
 
 
   return (
-    <SearchContainer>
+    <Container>
       <h1>
         Movie Database
       </h1>
@@ -39,11 +39,11 @@ export default function Home() {
         <SearchButton type="submit">Procurar</SearchButton>
       </SearchForm>
       <MovieList movies={moviesList} handleMovieDetails={handleMovieDetails} />
-    </SearchContainer>
+    </Container>
   );
 }
 
-const SearchContainer = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;

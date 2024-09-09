@@ -6,6 +6,7 @@ import {  useEffect, useState } from 'react';
 import { useMovies } from '../context/context';
 import { fetchMovies } from '../../services/api';
 import styled from "styled-components";
+import Pagination from './Pagination';
 import LoadingSpinner from './SpinnerWrap';
 
 interface MovieLabeledValues {
@@ -16,21 +17,22 @@ interface MovieLabeledValues {
 const MovieList = ({ handleMovieDetails }: MovieLabeledValues) => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const { moviesList, setMovies } = useMovies();
+  const { moviesList, setMovies, currentPage, totalPages, setPage, setTotalPages  } = useMovies();
 
   useEffect(() => {
     const getMovies = async () => {
-      const { movies, error } = await fetchMovies();
+      const { movies, error, totalPages } = await fetchMovies(currentPage);
       if (error) {
         setError(error);
       } else {
         setMovies(movies);
+        setTotalPages(totalPages);
       }
       setLoading(false);
     };
 
     getMovies();
-  }, []);
+  }, [currentPage]);
 
   if (loading) return <LoadingSpinner/>;
   if (error) return <p>{error}</p>;
@@ -42,6 +44,11 @@ const MovieList = ({ handleMovieDetails }: MovieLabeledValues) => {
       {moviesList.map((movie) => (
         <MovieCard key={movie.id} movie={movie} onClick={() => handleMovieDetails(movie)} />
       ))}
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        setPage={setPage}
+      />
     </Grid>
   );
 };
