@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React, { createContext, useState, ReactNode, useContext } from "react";
 import { MovieTypes, PaginationTypes } from "../types";
 
@@ -15,7 +15,7 @@ interface MovieContextProps {
 const MovieContext = createContext<MovieContextProps | undefined>(undefined);
 
 export function MovieProvider({ children }: { children: ReactNode }) {
-  const [moviesList, setMovies] = useState<MovieTypes[]>([]); 
+  const [moviesList, setMovies] = useState<MovieTypes[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
 
@@ -24,7 +24,17 @@ export function MovieProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <MovieContext.Provider value={{ moviesList, setMovies, currentPage, setCurrentPage, totalPages, setTotalPages, setPage }}>
+    <MovieContext.Provider
+      value={{
+        moviesList,
+        setMovies,
+        currentPage,
+        setCurrentPage,
+        totalPages,
+        setTotalPages,
+        setPage,
+      }}
+    >
       {children}
     </MovieContext.Provider>
   );
@@ -33,7 +43,7 @@ export function MovieProvider({ children }: { children: ReactNode }) {
 export const useMovies = () => {
   const context = useContext(MovieContext);
   if (!context) {
-    throw new Error('useMovies must be used within a MovieProvider');
+    throw new Error("useMovies must be used within a MovieProvider");
   }
   return context;
 };

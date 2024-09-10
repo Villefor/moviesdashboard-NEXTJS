@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import styled from 'styled-components';
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import styled from "styled-components";
 
 const Navbar = () => {
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -16,10 +16,10 @@ const Navbar = () => {
       setScrollPosition(currentScrollPos);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, [scrollPosition]);
 
@@ -29,10 +29,8 @@ const Navbar = () => {
 
   return (
     <NavContainer visible={visible}>
-      <Logo>MyMovies</Logo>
-      <MenuIcon onClick={toggleMenu}>
-        {menuOpen ? "✖" : "☰"}
-      </MenuIcon>
+      <Logo>Teste Frontend – Salaryfits</Logo>
+      <MenuIcon onClick={toggleMenu}>{menuOpen ? "✖" : "☰"}</MenuIcon>
       <Menu open={menuOpen}>
         <MenuItem>
           <Link href="/filmes-populares">Filmes Populares</Link>
@@ -55,7 +53,7 @@ const NavContainer = styled.nav<{ visible: boolean }>`
   background-color: #141414;
   position: fixed;
   width: 100%;
-  top: ${({ visible }) => (visible ? '0' : '-80px')};
+  top: ${({ visible }) => (visible ? "0" : "-80px")};
   transition: top 0.3s ease-in-out;
   z-index: 1000;
 
@@ -89,7 +87,7 @@ const Menu = styled.ul<{ open: boolean }>`
   @media (max-width: 768px) {
     flex-direction: column;
     position: absolute;
-    top: ${({ open }) => (open ? '4rem' : '-200px')};
+    top: ${({ open }) => (open ? "4rem" : "-200px")};
     right: 1rem;
     background-color: #141414;
     padding: 1rem;

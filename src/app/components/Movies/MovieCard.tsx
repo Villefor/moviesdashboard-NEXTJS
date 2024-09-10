@@ -1,10 +1,11 @@
-'use client';
+"use client";
 
 import React from "react";
 import styled from "styled-components";
 import Image from "next/image";
-import { IMAGE_URL } from "../constants";
-import { MovieTypes } from '../types'; 
+import { IMAGE_URL } from "../../constants";
+import { MovieTypes } from "../../types";
+import imageNotAvailable from '../../../assets/Image_not_available.png';
 
 interface MovieLabeledValues {
   movie: MovieTypes;
@@ -14,16 +15,26 @@ interface MovieLabeledValues {
 export default function MovieCard({ movie, onClick }: MovieLabeledValues) {
   return (
     <Card onClick={onClick}>
-      <Image 
-        src={`${IMAGE_URL}${movie.poster_path}`} 
-        alt={movie.title || movie.name || movie.original_title || movie.original_name}  
+      <Image
+        src={movie.poster_path ? `${IMAGE_URL}${movie.poster_path}` : imageNotAvailable} 
+        alt={
+          movie.title ||
+          movie.name ||
+          movie.original_title ||
+          movie.original_name
+        }
         layout="responsive"
         priority={true}
         width={128}
         height={192}
-        className={Poster}            
+        className={Poster}
       />
-      <MovieTitle>{movie.title || movie.name || movie.original_title || movie.original_name}</MovieTitle>
+      <MovieTitle>
+        {movie.title ||
+          movie.name ||
+          movie.original_title ||
+          movie.original_name}
+      </MovieTitle>
     </Card>
   );
 }
@@ -34,7 +45,9 @@ const Card = styled.div`
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 
   &:hover {
     transform: scale(1.02);
