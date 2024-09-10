@@ -2,10 +2,11 @@
 
 import React, { useState } from "react";
 import styled from "styled-components";
-import{ searchMovies } from "../services/api";
-import { useMovies } from './context/context';
+import { searchMovies } from "../services/api";
+import { useMovies } from "./context/context";
 import MovieList from "./components/MovieList";
-import{ MovieTypes } from './types';
+import { MovieTypes } from "./types";
+import NavBar from "./components/NavBar";
 
 export default function Home() {
   const [query, setQuery] = useState<string>("");
@@ -23,22 +24,21 @@ export default function Home() {
     console.log(movie);
   }
 
-
   return (
     <Container>
-      <h1>
-        Movie Database
-      </h1>
-      <SearchForm onSubmit={handleSearchMovies}>
-        <SearchInput
-          type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Pesquisar filmes"
-        />
-        <SearchButton type="submit">Procurar</SearchButton>
-      </SearchForm>
-      <MovieList movies={moviesList} handleMovieDetails={handleMovieDetails} />
+      <NavBar />
+      <Content>
+        <SearchForm onSubmit={handleSearchMovies}>
+          <SearchInput
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Pesquisar filmes"
+          />
+          <SearchButton type="submit">Procurar</SearchButton>
+        </SearchForm>
+        <MovieList movies={moviesList} handleMovieDetails={handleMovieDetails} />
+      </Content>
     </Container>
   );
 }
@@ -48,17 +48,32 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 20px;
+`;
+
+const Content = styled.div`
+  width: 100%;
+  margin-top: 10%;
 `;
 
 const SearchForm = styled.form`
   display: flex;
+  justify-content: space-around;
   width: 50%;
-  justify-content: center;
+  margin: 0 auto;
   background-color: #f0f0f0;
   border-radius: 30px;
-  padding: 5px 10px;
+  padding: 10px 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 5%;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    width: 80%;
+  }
+
+  @media (max-width: 480px) {
+    width: 90%;
+  }
 `;
 
 const SearchInput = styled.input`
@@ -71,6 +86,11 @@ const SearchInput = styled.input`
 
   &:focus {
     box-shadow: 0 0 5px rgba(0, 0, 255, 0.2);
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    margin-bottom: 10px;
   }
 `;
 
@@ -91,4 +111,10 @@ const SearchButton = styled.button`
   &:active {
     transform: scale(0.98);
   }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    margin-left: 0;
+  }
 `;
+
