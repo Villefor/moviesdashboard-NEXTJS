@@ -1,6 +1,7 @@
 "use client";
+
 import React, { createContext, useState, ReactNode, useContext } from "react";
-import { MovieTypes, PaginationTypes } from "../types";
+import { MovieTypes, PaginationTypes, TVShowTypes } from "../types";
 
 interface MovieContextProps {
   tvPages: PaginationTypes["currentPage"];
@@ -12,6 +13,8 @@ interface MovieContextProps {
   setTotalPages: React.Dispatch<React.SetStateAction<number>>;
   setTvTotalPages: React.Dispatch<React.SetStateAction<number>>;
   moviesList: MovieTypes[];
+  tvShowsList : TVShowTypes[];
+  setTvShows: React.Dispatch<React.SetStateAction<TVShowTypes[]>>;
   setMovies: React.Dispatch<React.SetStateAction<MovieTypes[]>>;
   setPage: (page: number) => void;
 }
@@ -20,6 +23,7 @@ const MovieContext = createContext<MovieContextProps | undefined>(undefined);
 
 export function MovieProvider({ children }: { children: ReactNode }) {
   const [moviesList, setMovies] = useState<MovieTypes[]>([]);
+  const [tvShowsList, setTvShows] = useState<TVShowTypes[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [tvPages, setTvPages] = useState<number>(1);
@@ -34,6 +38,8 @@ export function MovieProvider({ children }: { children: ReactNode }) {
       value={{
         moviesList,
         setMovies,
+        tvShowsList,
+        setTvShows,
         currentPage,
         tvPages,
         tvTotalPages,

@@ -3,35 +3,36 @@
 import { useState, useEffect } from 'react';
 import Navbar from '../components/NavBar';
 import styled from 'styled-components';
-import { TVShowTypes } from '../types'; 
 import { fetchTVShows } from '../../services/api';
 import LoadingSpinner from '@/app/components/SpinnerWrap';
 import TVShowList from '../components/Tvs/TVShowList';
 import { useMovies } from '@/app/context/context';
+import SearchBar from '../components/SearchBar';
 
 const TVList = () => {
-  const [tvShows, setTVShows] = useState<TVShowTypes[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   const {
+    tvShowsList,
+    setTvShows,
     tvPages,
     setTvTotalPages,
   } = useMovies();
 
   useEffect(() => {
-    const getMovies = async () => {
+    const getTvShows = async () => {
       const { shows, error, totalPages } = await fetchTVShows(tvPages);
       if (error) {
         setError(error);
       } else {
-        setTVShows(shows);
+        setTvShows(shows);
         setTvTotalPages(totalPages);
       }
       setLoading(false);
     };
 
-    getMovies();
+    getTvShows();
   }, [tvPages]);
 
   if (loading) return <LoadingSpinner />;
@@ -41,8 +42,8 @@ const TVList = () => {
     <PageContainer>
       <Navbar />
       <Content>
-        <h1>TV Shows</h1>
-        <TVShowList tvShows={tvShows} />
+      <SearchBar />
+        <TVShowList tvShows={tvShowsList} />
       </Content>
     </PageContainer>
   );
@@ -51,12 +52,14 @@ const TVList = () => {
 const PageContainer = styled.div`
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Content = styled.div`
   padding: 2rem;
   flex: 1;
+  margin-top: 10%;
 `;
 
 export default TVList;

@@ -29,7 +29,7 @@ const MovieModal = ({ movie, modalOpen, onClose }: MovieModalProps) => {
 
   const handleSimilarSearch = async (title: string) => {
     const results = await searchMovies(title);
-    setMovies(results);
+    setMovies(results.movies);
     onClose(); 
   };
 

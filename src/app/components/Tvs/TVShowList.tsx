@@ -22,7 +22,6 @@ const truncateTitle = (title: string, maxLength: number = 20) => {
 const TVShowList = ({ tvShows }: TVShowListProps) => {
   return (
     <TVShowsContainer>
-      <h3>Popular TV Shows:</h3>
       <TVShowsGrid>
         {tvShows.map((show) => (
           <TVShowCard key={show.id}>

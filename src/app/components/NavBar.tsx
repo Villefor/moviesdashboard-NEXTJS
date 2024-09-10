@@ -3,11 +3,20 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import styled from "styled-components";
+import { useMovies } from "..//context/context";
+import { fetchPopularMovies } from "../../services/api";
+import LoadingSpinner from "./SpinnerWrap";
 
 const Navbar = () => {
   const [scrollPosition, setScrollPosition] = useState(0);
   const [visible, setVisible] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [loading, setLoading] = useState(false); 
+  const {
+    setMovies,
+    currentPage,
+    setTotalPages,
+  } = useMovies();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,16 +36,33 @@ const Navbar = () => {
     setMenuOpen(!menuOpen);
   };
 
+  const handlePopularMoviesClick = async () => {
+    setLoading(true);
+    try {
+      const { movies, totalPages } = await fetchPopularMovies(currentPage);
+      setMovies(movies); 
+      setTotalPages(totalPages);
+    } catch (error) {
+      console.error("Error fetching popular movies:", error);
+    }finally {
+      setLoading(false); 
+    }
+  };
+
   return (
     <NavContainer isVisible={visible}>
       <Logo>Teste Frontend – Salaryfits</Logo>
       <MenuIcon onClick={toggleMenu}>{menuOpen ? "✖" : "☰"}</MenuIcon>
       <Menu open={menuOpen}>
         <MenuItem>
-          <Link href="/filmes-populares">Filmes Populares</Link>
+        <Link href="/" onClick={handlePopularMoviesClick}>
+          {loading ? <LoadingSpinner /> : "Filmes Populares"}
+        </Link>
         </MenuItem>
         <MenuItem>
-          <Link href="/tv_list">Séries Populares</Link>
+        <Link href="/tv_list" onClick={handlePopularMoviesClick}>
+          {loading ? <LoadingSpinner /> : "Séries Populares"}
+        </Link>
         </MenuItem>
       </Menu>
     </NavContainer>

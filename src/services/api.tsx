@@ -1,4 +1,4 @@
-import { API_URL, API_SEARCH_URL, MOVIES_API_POPULAR_URL, TV_API_POPULAR_URL } from "../app/constants";
+import { API_URL, API_SEARCH_URL, MOVIES_API_POPULAR_URL, TV_API_POPULAR_URL, TV_API_SEARCH_URL } from "../app/constants";
 import { MovieTypes, PaginationTypes, TVShowTypes } from '../app/types';
 import axios from 'axios';
 
@@ -28,15 +28,15 @@ export const fetchMovies = async (page: number): Promise<{ movies: MovieTypes[],
   }
 };
 
-export const searchMovies = async (query: string): Promise<MovieTypes[]> => {
+export const searchMovies = async (query: string): Promise<{movies: MovieTypes[]}> => {
   try {
     const response = await fetch(
-      `${API_SEARCH_URL}/search/movie?api_key=${process.env.NEXT_PUBLIC_API_KEY}&query=${encodeURIComponent(query)}`, 
+      `${API_SEARCH_URL}api_key=${process.env.NEXT_PUBLIC_API_KEY}&query=${encodeURIComponent(query)}`, 
     );
     const data = await response.json();
 
     if (data.results) {
-      return  data.results;
+      return  {movies: data.results}
     }
     else {
       throw new Error("Failed to fetch movies.");
@@ -104,3 +104,22 @@ export const fetchTVShows = async (page: number): Promise<{ shows: TVShowTypes[]
     return { shows: [], totalPages: 0, error: 'An error occurred while fetching data.' };
   }
 };
+
+export const searchTvShows = async (query: string): Promise<{shows: TVShowTypes[]}> => {
+  try {
+    const response = await fetch(
+      `${TV_API_SEARCH_URL}api_key=${process.env.NEXT_PUBLIC_API_KEY}&query=${encodeURIComponent(query)}`, 
+    );
+    const data = await response.json();
+
+    if (data.results) {
+      return  {shows: data.results}
+    }
+    else {
+      throw new Error("Failed to fetch movies.");
+    }
+  } catch (err) {
+    console.error(err);
+    throw new Error("An error occurred while fetching data.");
+  }
+}
