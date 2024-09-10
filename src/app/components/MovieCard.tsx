@@ -1,4 +1,4 @@
-'use client'  
+'use client';
 
 import React from "react";
 import styled from "styled-components";
@@ -11,24 +11,20 @@ interface MovieLabeledValues {
   onClick: () => void;
 }
 
-export default function MovieCard({movie, onClick}: MovieLabeledValues) {
-
+export default function MovieCard({ movie, onClick }: MovieLabeledValues) {
   return (
-        <Card key={movie.id}>
-          <Image 
-            src={`${IMAGE_URL}${movie.poster_path}`} 
-            alt={movie.title || movie.name  || movie.original_title   || movie.original_name}  
-            layout="responsive"
-            priority={true}
-            width={128}
-            height={192}
-            objectFit="cover"
-            className={Poster}            
-            />
-          <MovieTitle>{movie.title || movie.name  || movie.original_title   || movie.original_name}</MovieTitle>
-          <Rating>{movie.vote_average}/10</Rating>
-          <Overview>{movie.overview}</Overview>
-        </Card>
+    <Card onClick={onClick}>
+      <Image 
+        src={`${IMAGE_URL}${movie.poster_path}`} 
+        alt={movie.title || movie.name || movie.original_title || movie.original_name}  
+        layout="responsive"
+        priority={true}
+        width={128}
+        height={192}
+        className={Poster}            
+      />
+      <MovieTitle>{movie.title || movie.name || movie.original_title || movie.original_name}</MovieTitle>
+    </Card>
   );
 }
 
@@ -37,26 +33,22 @@ const Card = styled.div`
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  }
 `;
 
 const Poster = styled.img`
-  width={158}
-  height={192}
+  width: 100%;
+  height: auto;
 `;
 
 const MovieTitle = styled.h2`
   font-size: 18px;
   margin: 10px 0;
   padding: 0 10px;
-`;
-
-const Rating = styled.p`
-  font-weight: bold;
-  padding: 0 10px;
-`;
-
-const Overview = styled.p`
-  padding: 10px;
-  font-size: 14px;
-  color: #555;
 `;

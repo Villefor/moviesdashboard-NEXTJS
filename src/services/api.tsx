@@ -1,4 +1,4 @@
-import { API_URL } from "../app/constants";
+import { API_URL, API_SEARCH_URL } from "../app/constants";
 import { MovieTypes, PaginationTypes } from '../app/types';
 import axios from 'axios';
 
@@ -23,7 +23,7 @@ export const fetchMovies = async (page: number): Promise<{ movies: MovieTypes[],
 export const searchMovies = async (query: string): Promise<MovieTypes[]> => {
   try {
     const response = await fetch(
-      `${API_URL}/search/movie?api_key=${process.env.NEXT_PUBLIC_API_KEY}&query=${encodeURIComponent(query)}}`, 
+      `${API_SEARCH_URL}/search/movie?api_key=${process.env.NEXT_PUBLIC_API_KEY}&query=${encodeURIComponent(query)}`, 
     );
     const data = await response.json();
 
