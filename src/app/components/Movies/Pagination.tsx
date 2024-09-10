@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import { usePathname } from "next/navigation";
 import { PaginationTypes } from "../../types";
-import { fetchMovies } from "../../../services/api";
+import { fetchMovies, fetchTVShows } from "../../../services/api";
 
 interface PaginationProps {
   currentPage: PaginationTypes["currentPage"];
@@ -10,16 +11,27 @@ interface PaginationProps {
 }
 
 const Pagination = ({ currentPage, totalPages, setPage }: PaginationProps) => {
+  const pathname = usePathname(); 
+
   const handleNextPage = async () => {
     if (currentPage < totalPages) {
       setPage(currentPage + 1);
-      await fetchMovies(currentPage);
+      if (pathname === "/tv_list") {
+        await fetchTVShows(currentPage + 1);
+      } else {
+        await fetchMovies(currentPage + 1);
+      }
     }
   };
 
-  const handlePreviousPage = () => {
+  const handlePreviousPage = async () => {
     if (currentPage > 1) {
       setPage(currentPage - 1);
+      if (pathname === "/tv_list") {
+        await fetchTVShows(currentPage - 1);
+      } else {
+        await fetchMovies(currentPage - 1);
+      }
     }
   };
 

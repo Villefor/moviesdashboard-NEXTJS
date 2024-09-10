@@ -28,7 +28,7 @@ export const fetchMovies = async (page: number): Promise<{ movies: MovieTypes[],
   }
 };
 
-export const searchMovies = async (query: string): Promise<{movies: MovieTypes[]}> => {
+export const searchMovies = async (query: string): Promise<{movies: MovieTypes[], totalPages: PaginationTypes["totalPages"]}> => {
   try {
     const response = await fetch(
       `${API_SEARCH_URL}api_key=${process.env.NEXT_PUBLIC_API_KEY}&query=${encodeURIComponent(query)}`, 
@@ -36,7 +36,9 @@ export const searchMovies = async (query: string): Promise<{movies: MovieTypes[]
     const data = await response.json();
 
     if (data.results) {
-      return  {movies: data.results}
+      const MAX_PAGES = 500;
+      const totalPages = Math.min(data.total_pages, MAX_PAGES);
+      return  {movies: data.results, totalPages}
     }
     else {
       throw new Error("Failed to fetch movies.");
@@ -105,7 +107,7 @@ export const fetchTVShows = async (page: number): Promise<{ shows: TVShowTypes[]
   }
 };
 
-export const searchTvShows = async (query: string): Promise<{shows: TVShowTypes[]}> => {
+export const searchTvShows = async (query: string): Promise<{shows: TVShowTypes[], totalPages: PaginationTypes["totalPages"]}> => {
   try {
     const response = await fetch(
       `${TV_API_SEARCH_URL}api_key=${process.env.NEXT_PUBLIC_API_KEY}&query=${encodeURIComponent(query)}`, 
@@ -113,7 +115,9 @@ export const searchTvShows = async (query: string): Promise<{shows: TVShowTypes[
     const data = await response.json();
 
     if (data.results) {
-      return  {shows: data.results}
+      const MAX_PAGES = 500;
+      const totalPages = Math.min(data.total_pages, MAX_PAGES);
+      return  {shows: data.results, totalPages}
     }
     else {
       throw new Error("Failed to fetch movies.");

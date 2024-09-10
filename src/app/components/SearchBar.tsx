@@ -8,7 +8,7 @@ import { usePathname } from "next/navigation";
 
 const SearchForm = () => {
   const [query, setQuery] = useState<string>("");
-  const { setMovies, setTvShows } = useMovies();
+  const { setPage, setTotalPages, setMovies, setTvShows } = useMovies();
   const pathname = usePathname(); 
 
   async function handleSearch(event: React.FormEvent) {
@@ -17,11 +17,15 @@ const SearchForm = () => {
 
     try {
       if (pathname === "/tv_list") {
-        const results = await searchTvShows(query); 
-        setTvShows(results.shows); 
+        const {shows, totalPages} = await searchTvShows(query); 
+        setTvShows(shows); 
+        setTotalPages(totalPages);
+        setPage(1);
       } else {
-        const results = await searchMovies(query); 
-        setMovies(results.movies); 
+        const {movies, totalPages} = await searchMovies(query); 
+        setMovies(movies); 
+        setTotalPages(totalPages);
+        setPage(1);
       }
     } catch (error) {
       console.error("Error searching:", error);

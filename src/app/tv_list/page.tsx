@@ -8,6 +8,7 @@ import LoadingSpinner from '@/app/components/SpinnerWrap';
 import TVShowList from '../components/Tvs/TVShowList';
 import { useMovies } from '@/app/context/context';
 import SearchBar from '../components/SearchBar';
+import Pagination from '../../app/components/Movies/Pagination';
 
 const TVList = () => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -16,24 +17,26 @@ const TVList = () => {
   const {
     tvShowsList,
     setTvShows,
-    tvPages,
-    setTvTotalPages,
+    setTotalPages,
+    currentPage,
+    totalPages,
+    setPage,
   } = useMovies();
 
   useEffect(() => {
     const getTvShows = async () => {
-      const { shows, error, totalPages } = await fetchTVShows(tvPages);
+      const { shows, error, totalPages } = await fetchTVShows(currentPage);
       if (error) {
         setError(error);
       } else {
         setTvShows(shows);
-        setTvTotalPages(totalPages);
+        setTotalPages(totalPages);
       }
       setLoading(false);
     };
 
     getTvShows();
-  }, [tvPages]);
+  }, [currentPage]);
 
   if (loading) return <LoadingSpinner />;
   if (error) return <p>{error}</p>;
@@ -45,6 +48,13 @@ const TVList = () => {
       <SearchBar />
         <TVShowList tvShows={tvShowsList} />
       </Content>
+      <PaginationWrapper>
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          setPage={setPage}
+        />
+      </PaginationWrapper>
     </PageContainer>
   );
 };
@@ -61,5 +71,13 @@ const Content = styled.div`
   flex: 1;
   margin-top: 10%;
 `;
+
+const PaginationWrapper = styled.div`
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+`;
+
 
 export default TVList;
