@@ -4,24 +4,18 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { searchMovies } from "../services/api";
 import { useMovies } from "./context/context";
-import MovieList from "./components/MovieList";
-import { MovieTypes } from "./types";
+import MovieList from "./components/Movies/MovieList";
 import NavBar from "./components/NavBar";
 
 export default function Home() {
   const [query, setQuery] = useState<string>("");
-  const { moviesList, setMovies } = useMovies();
+  const { setMovies } = useMovies();
 
   async function handleSearchMovies(event: React.FormEvent) {
     event.preventDefault();
     if (!query) return;
     const results = await searchMovies(query);
     setMovies(results);
-  }
-
-  function handleMovieDetails(movie: MovieTypes) {
-    // Implement the logic to handle movie details
-    console.log(movie);
   }
 
   return (
@@ -37,7 +31,7 @@ export default function Home() {
           />
           <SearchButton type="submit">Procurar</SearchButton>
         </SearchForm>
-        <MovieList movies={moviesList} handleMovieDetails={handleMovieDetails} />
+        <MovieList />
       </Content>
     </Container>
   );
@@ -117,4 +111,3 @@ const SearchButton = styled.button`
     margin-left: 0;
   }
 `;
-

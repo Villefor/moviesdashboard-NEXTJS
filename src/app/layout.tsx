@@ -27,9 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <MovieProvider>
-          {children}
-        </MovieProvider>
+        <MovieProvider>{children}</MovieProvider>
       </body>
     </html>
   );

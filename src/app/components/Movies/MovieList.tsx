@@ -1,18 +1,25 @@
-'use client'
-import React, { useEffect, useState } from 'react';
-import MovieCard from './MovieCard';
-import { MovieTypes } from '../types'; 
-import { useMovies } from '../context/context';
-import { fetchMovies } from '../../services/api';
-import MovieModal from './MovieModal';
+"use client";
+import React, { useEffect, useState } from "react";
+import MovieCard from "./MovieCard";
+import { MovieTypes } from "../../types";
+import { useMovies } from "../../context/context";
+import { fetchMovies } from "../../../services/api";
+import MovieModal from "./MovieModal";
 import styled from "styled-components";
-import Pagination from './Pagination';
-import LoadingSpinner from './SpinnerWrap';
+import Pagination from "./Pagination";
+import LoadingSpinner from "../SpinnerWrap";
 
 const MovieList = () => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const { moviesList, setMovies, currentPage, totalPages, setPage, setTotalPages } = useMovies();
+  const {
+    moviesList,
+    setMovies,
+    currentPage,
+    totalPages,
+    setPage,
+    setTotalPages,
+  } = useMovies();
   const [selectedMovie, setSelectedMovie] = useState<MovieTypes | null>(null);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
@@ -51,13 +58,17 @@ const MovieList = () => {
     <Container>
       <Grid>
         {moviesList.map((movie) => (
-          <MovieCard key={movie.id} movie={movie} onClick={() => handleMovieClick(movie)} />
+          <MovieCard
+            key={movie.id}
+            movie={movie}
+            onClick={() => handleMovieClick(movie)}
+          />
         ))}
       </Grid>
-        <MovieModal
-          movie={selectedMovie}
-          modalOpen={modalOpen}
-          onClose={closeModal}
+      <MovieModal
+        movie={selectedMovie}
+        modalOpen={modalOpen}
+        onClose={closeModal}
       />
       <PaginationWrapper>
         <Pagination

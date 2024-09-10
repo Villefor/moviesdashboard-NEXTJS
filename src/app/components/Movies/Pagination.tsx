@@ -1,7 +1,7 @@
-import React from 'react';
-import styled from 'styled-components';
-import { PaginationTypes } from '../types';
-import { fetchMovies } from '../../services/api';
+import React from "react";
+import styled from "styled-components";
+import { PaginationTypes } from "../../types";
+import { fetchMovies } from "../../../services/api";
 
 interface PaginationProps {
   currentPage: PaginationTypes["currentPage"];
@@ -53,11 +53,16 @@ const Pagination = ({ currentPage, totalPages, setPage }: PaginationProps) => {
       {endPage < totalPages && (
         <>
           {endPage < totalPages - 1 && <Ellipsis>...</Ellipsis>}
-          <PageButton onClick={() => setPage(totalPages)}>{totalPages}</PageButton>
+          <PageButton onClick={() => setPage(totalPages)}>
+            {totalPages}
+          </PageButton>
         </>
       )}
 
-      <PageButton onClick={handleNextPage} disabled={currentPage === totalPages}>
+      <PageButton
+        onClick={handleNextPage}
+        disabled={currentPage === totalPages}
+      >
         &gt;
       </PageButton>
     </PaginationContainer>
