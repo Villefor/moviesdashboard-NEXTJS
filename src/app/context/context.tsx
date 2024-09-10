@@ -3,10 +3,14 @@ import React, { createContext, useState, ReactNode, useContext } from "react";
 import { MovieTypes, PaginationTypes } from "../types";
 
 interface MovieContextProps {
+  tvPages: PaginationTypes["currentPage"];
+  setTvPages: React.Dispatch<React.SetStateAction<number>>;
   currentPage: PaginationTypes["currentPage"];
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+  tvTotalPages: PaginationTypes["totalPages"];
   totalPages: PaginationTypes["totalPages"];
   setTotalPages: React.Dispatch<React.SetStateAction<number>>;
+  setTvTotalPages: React.Dispatch<React.SetStateAction<number>>;
   moviesList: MovieTypes[];
   setMovies: React.Dispatch<React.SetStateAction<MovieTypes[]>>;
   setPage: (page: number) => void;
@@ -18,6 +22,8 @@ export function MovieProvider({ children }: { children: ReactNode }) {
   const [moviesList, setMovies] = useState<MovieTypes[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
+  const [tvPages, setTvPages] = useState<number>(1);
+  const [tvTotalPages, setTvTotalPages] = useState<number>(1);
 
   const setPage = (page: number) => {
     setCurrentPage(page);
@@ -29,9 +35,13 @@ export function MovieProvider({ children }: { children: ReactNode }) {
         moviesList,
         setMovies,
         currentPage,
+        tvPages,
+        tvTotalPages,
+        setTvPages,
         setCurrentPage,
         totalPages,
         setTotalPages,
+        setTvTotalPages,
         setPage,
       }}
     >

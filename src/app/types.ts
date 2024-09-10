@@ -18,3 +18,15 @@ export interface PaginationTypes {
   totalPages: number;
   setPage: (page: number) => void;
 }
+
+export interface TVShowTypes {
+  id: number;
+  name: string;
+  original_name: string;
+  first_air_date: string;
+  original_language: string;
+  genre_ids: number[];
+  overview: string;
+  poster_path: string;
+  vote_average: number;
+}

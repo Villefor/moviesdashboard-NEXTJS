@@ -28,7 +28,7 @@ const Navbar = () => {
   };
 
   return (
-    <NavContainer visible={visible}>
+    <NavContainer isVisible={visible}>
       <Logo>Teste Frontend – Salaryfits</Logo>
       <MenuIcon onClick={toggleMenu}>{menuOpen ? "✖" : "☰"}</MenuIcon>
       <Menu open={menuOpen}>
@@ -36,7 +36,7 @@ const Navbar = () => {
           <Link href="/filmes-populares">Filmes Populares</Link>
         </MenuItem>
         <MenuItem>
-          <Link href="/series-populares">Séries Populares</Link>
+          <Link href="/tv_list">Séries Populares</Link>
         </MenuItem>
       </Menu>
     </NavContainer>
@@ -45,7 +45,9 @@ const Navbar = () => {
 
 export default Navbar;
 
-const NavContainer = styled.nav<{ visible: boolean }>`
+const NavContainer = styled.nav.withConfig({
+  shouldForwardProp: (prop) => prop !== 'isVisible',
+})<{ isVisible: boolean }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -53,7 +55,7 @@ const NavContainer = styled.nav<{ visible: boolean }>`
   background-color: #141414;
   position: fixed;
   width: 100%;
-  top: ${({ visible }) => (visible ? "0" : "-80px")};
+  top: ${({ isVisible }) => (isVisible ? "0" : "-80px")};
   transition: top 0.3s ease-in-out;
   z-index: 1000;
 
