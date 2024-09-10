@@ -102,7 +102,7 @@ const MovieTitle = styled.p`
 `;
 
 const ArrowButton = styled.button`
-  background-color: #ff6347;
+  background-color: black;
   border: none;
   color: white;
   padding: 10px;
