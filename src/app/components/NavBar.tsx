@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import styled from "styled-components";
-import { useMovies } from "..//context/context";
+import { useMovies } from "../context/context";
 import { fetchPopularMovies } from "../../services/api";
 import LoadingSpinner from "./SpinnerWrap";
 
@@ -12,11 +13,9 @@ const Navbar = () => {
   const [visible, setVisible] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
   const [loading, setLoading] = useState(false); 
-  const {
-    setMovies,
-    currentPage,
-    setTotalPages,
-  } = useMovies();
+  const { setMovies, currentPage, setTotalPages } = useMovies();
+  
+  const pathname = usePathname(); // Get the current path
 
   useEffect(() => {
     const handleScroll = () => {
@@ -44,7 +43,7 @@ const Navbar = () => {
       setTotalPages(totalPages);
     } catch (error) {
       console.error("Error fetching popular movies:", error);
-    }finally {
+    } finally {
       setLoading(false); 
     }
   };
@@ -54,15 +53,15 @@ const Navbar = () => {
       <Logo>Teste Frontend – Salaryfits</Logo>
       <MenuIcon onClick={toggleMenu}>{menuOpen ? "✖" : "☰"}</MenuIcon>
       <Menu open={menuOpen}>
-        <MenuItem>
-        <Link href="/" onClick={handlePopularMoviesClick}>
-          {loading ? <LoadingSpinner /> : "Filmes Populares"}
-        </Link>
+        <MenuItem isActive={pathname === "/"}>
+          <Link href="/" onClick={handlePopularMoviesClick}>
+            {loading ? <LoadingSpinner /> : "Filmes Populares"}
+          </Link>
         </MenuItem>
-        <MenuItem>
-        <Link href="/tv_list" onClick={handlePopularMoviesClick}>
-          {loading ? <LoadingSpinner /> : "Séries Populares"}
-        </Link>
+        <MenuItem isActive={pathname === "/tv_list"}>
+          <Link href="/tv_list" onClick={handlePopularMoviesClick}>
+            {loading ? <LoadingSpinner /> : "Séries Populares"}
+          </Link>
         </MenuItem>
       </Menu>
     </NavContainer>
@@ -126,7 +125,7 @@ const Menu = styled.ul<{ open: boolean }>`
   }
 `;
 
-const MenuItem = styled.li`
+const MenuItem = styled.li<{ isActive: boolean }>`
   list-style: none;
 
   a {
@@ -134,7 +133,22 @@ const MenuItem = styled.li`
     color: #f4f4f4;
     font-size: 1rem;
     font-weight: 500;
+    position: relative;
     transition: color 0.3s ease-in-out;
+
+    ${({ isActive }) =>
+      isActive &&
+      `
+      &:after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 2px;
+        background-color: #e50914;
+        bottom: -4px;
+        left: 0;
+      }
+    `}
 
     &:hover {
       color: #e50914;

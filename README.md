@@ -30,6 +30,7 @@ cd seu-repositorio
 
 - bash
   - npm install
+  - npm install -D tailwindcss postcss autoprefixer
 
 ### 3. Configure as Variáveis de Ambiente
 

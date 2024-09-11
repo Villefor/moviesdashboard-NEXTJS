@@ -47,9 +47,6 @@ const MovieModal = ({ movie, modalOpen, onClose }: MovieModalProps) => {
         <Detail>
           <strong>Idioma nativo:</strong> {movie.original_language}
         </Detail>
-        <Detail>
-          <strong>Generos:</strong> {movie.genre_ids.join(", ")}
-        </Detail>
         <SimilarMoviesList similarMovies={similarMovies} onMovieClick={handleSimilarSearch} />
         <CloseButton onClick={onClose}>Fechar</CloseButton>
       </ModalContent>

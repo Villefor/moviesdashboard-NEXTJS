@@ -1,14 +1,6 @@
-import { API_URL, API_SEARCH_URL, MOVIES_API_POPULAR_URL, TV_API_POPULAR_URL, TV_API_SEARCH_URL } from "../app/constants";
+import { API_URL, API_SEARCH_URL, MOVIES_API_POPULAR_URL, TV_API_POPULAR_URL, TV_API_SEARCH_URL, API_SIMILAR_URL } from "../app/constants";
 import { MovieTypes, PaginationTypes, TVShowTypes } from '../app/types';
 import axios from 'axios';
-
-const options = {
-  method: 'GET',
-  headers: {
-    accept: 'application/json',
-    Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN}`
-  }
-};
 
 export const fetchMovies = async (page: number): Promise<{ movies: MovieTypes[], totalPages: PaginationTypes["totalPages"], error: string | null }> => {
   try {
@@ -52,8 +44,7 @@ export const searchMovies = async (query: string): Promise<{movies: MovieTypes[]
 export const fetchSimilarMovies = async (id: number): Promise<MovieTypes[]> => {
   try {
     const response = await fetch(
-      `${API_SEARCH_URL}/movie/${id}/similar?api_key=${process.env.NEXT_PUBLIC_API_KEY}&language=en-US&page=1`,
-      options  
+      `${API_SIMILAR_URL}${id}/similar?api_key=${process.env.NEXT_PUBLIC_API_KEY}&language=en-US&page=1`,
     );
     const data = await response.json();
 
