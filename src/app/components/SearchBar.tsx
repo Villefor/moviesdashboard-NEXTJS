@@ -79,7 +79,7 @@ const Input = styled.input`
   border: none;
   border-radius: 30px;
   padding: 10px;
-  width: 300px;
+  width: 60%;
   font-size: 16px;
   outline: none;
 
@@ -88,16 +88,17 @@ const Input = styled.input`
   }
 
   @media (max-width: 1024px) {
-    width: 250px; /* Slightly reduce width on tablets */
+    width: 60%;
   }
 
   @media (max-width: 768px) {
-    width: 100%; /* Full width on mobile */
-    margin-bottom: 10px; /* Add margin for space between input and button */
+    width: 100%;
+    margin-bottom: 10px; 
   }
 
   @media (max-width: 480px) {
-    font-size: 14px; /* Adjust font-size for smaller screens */
+    width: 100%;
+    font-size: 14px; 
   }
 `;
 
