@@ -12,6 +12,13 @@ interface MovieLabeledValues {
   onClick: () => void;
 }
 
+const truncateTitle = (title: string, maxLength: number = 20) => {
+  if (title.length > maxLength) {
+    return title.slice(0, maxLength) + '...';
+  }
+  return title;
+};
+
 export default function MovieCard({ movie, onClick }: MovieLabeledValues) {
   return (
     <Card onClick={onClick}>
@@ -27,13 +34,14 @@ export default function MovieCard({ movie, onClick }: MovieLabeledValues) {
         priority={true}
         width={128}
         height={192}
-        className={Poster}
       />
       <MovieTitle>
-        {movie.title ||
+        {truncateTitle(
+          movie.title ||
           movie.name ||
           movie.original_title ||
-          movie.original_name}
+          movie.original_name
+        )}
       </MovieTitle>
     </Card>
   );
@@ -55,13 +63,12 @@ const Card = styled.div`
   }
 `;
 
-const Poster = styled.img`
-  width: 100%;
-  height: auto;
-`;
-
 const MovieTitle = styled.h2`
-  font-size: 18px;
-  margin: 10px 0;
-  padding: 0 10px;
+  text-align: center;
+  margin-top: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;

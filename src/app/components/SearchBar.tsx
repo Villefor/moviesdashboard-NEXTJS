@@ -61,10 +61,12 @@ const Form = styled.form`
   @media (max-width: 768px) {
     flex-direction: column;
     width: 80%;
+    margin-top: 10%;
   }
 
   @media (max-width: 480px) {
     width: 90%;
+    margin-top: 10%;
   }
 `;
 
