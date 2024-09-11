@@ -93,6 +93,18 @@ const Grid = styled.div`
   grid-template-columns: repeat(4, 1fr);
   gap: 40px;
   width: 100%;
+
+  @media (max-width: 480px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  @media (min-width: 481px) and (max-width: 767px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
 `;
 
 const PaginationWrapper = styled.div`
