@@ -49,7 +49,7 @@ export default SearchForm;
 
 const Form = styled.form`
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between; /* Space between the input and button */
   width: 50%;
   margin: 0 auto;
   background-color: #f0f0f0;
@@ -58,10 +58,15 @@ const Form = styled.form`
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin-bottom: 5%;
 
+  @media (max-width: 1024px) {
+    width: 70%; /* Reduce width on medium-sized screens */
+  }
+
   @media (max-width: 768px) {
     flex-direction: column;
     width: 80%;
     margin-top: 10%;
+    padding: 15px 20px; /* Slightly increase padding for mobile */
   }
 
   @media (max-width: 480px) {
@@ -82,9 +87,17 @@ const Input = styled.input`
     box-shadow: 0 0 5px rgba(0, 0, 255, 0.2);
   }
 
+  @media (max-width: 1024px) {
+    width: 250px; /* Slightly reduce width on tablets */
+  }
+
   @media (max-width: 768px) {
-    width: 100%;
-    margin-bottom: 10px;
+    width: 100%; /* Full width on mobile */
+    margin-bottom: 10px; /* Add margin for space between input and button */
+  }
+
+  @media (max-width: 480px) {
+    font-size: 14px; /* Adjust font-size for smaller screens */
   }
 `;
 
@@ -106,8 +119,17 @@ const Button = styled.button`
     transform: scale(0.98);
   }
 
+  @media (max-width: 1024px) {
+    font-size: 14px; /* Adjust button font size on medium screens */
+    padding: 10px 15px;
+  }
+
   @media (max-width: 768px) {
-    width: 100%;
-    margin-left: 0;
+    width: 100%; /* Full width on mobile */
+    margin-left: 0; /* Remove left margin on mobile */
+  }
+
+  @media (max-width: 480px) {
+    font-size: 14px; /* Adjust font-size for smaller screens */
   }
 `;
