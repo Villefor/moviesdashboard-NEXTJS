@@ -2,12 +2,13 @@
 
 Este projeto é um dashboard de filmes construído com Next.js, React e Styled Components. O dashboard permite que você pesquise e visualize filmes e séries populares, com funcionalidades de paginação e exibição de detalhes dos filmes.
 
+ - Link do projeto na vercel: https://moviesdashboard-nextjs-b28xhdsxr-villefors-projects.vercel.app/
+
 ## Tecnologias Utilizadas
 
 - **Next.js**: Framework React para aplicações web.
 - **React**: Biblioteca para construção de interfaces de usuário.
 - **Styled Components**: Biblioteca para estilização de componentes.
-- **Axios**: Cliente HTTP para fazer solicitações à API.
 
 ## Funcionalidades
 
